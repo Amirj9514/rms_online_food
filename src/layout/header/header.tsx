@@ -1,4 +1,3 @@
-import React from 'react'
 import './header.scss';
 import { CiLocationOn } from 'react-icons/ci'
 import { Button } from 'primereact/button';
@@ -10,7 +9,7 @@ const Header = () => {
             <div className='flex justify-content-between align-items-center py-2 mx-4'>
                 <div className='flex align-items-center gap-3'>
                     <div className='logo'>
-                        <img src={logo} width={100} />
+                        <img src={logo} alt='logo' width={100} />
                     </div>
 
                     <div className='flex gap-1 align-items-center cursor-pointer ml-3'>
