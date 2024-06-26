@@ -4,14 +4,9 @@ import { useSharedService } from '../../../shared/services/shared.service';
 
 const Banner: React.FC = () => {
 
-    const { sendPostRequest , state } = useSharedService()
+    const { sendPostRequest, state } = useSharedService()
     const [images, setImages] = useState<any[]>([]);
 
-    useEffect(() => {
-        console.log(state);
-        
-    }, [])
-    
     useEffect(() => {
         const getBanners = async () => {
             let apiParam = {
@@ -35,15 +30,13 @@ const Banner: React.FC = () => {
         getBanners()
     }, [sendPostRequest]);
 
-
-
     const itemTemplate = (item: any) => {
         return <img className='border-round-2xl overflow-hidden' src={item.image} alt={item?.alt ? item.alt : ''} style={{ width: '100%', display: 'block', height: '100%', objectFit: 'fill' }} />;
     };
     return (
-        <div className="card">
-            <Galleria value={images} autoPlay={true} style={{ maxWidth: '100%', height: '450px' }} showThumbnails={false} item={itemTemplate} />
-        </div>
+        <><div className="card">
+            <Galleria value={images} className='bannerHeight' autoPlay={true} style={{ maxWidth: '100%', }} showThumbnails={false} item={itemTemplate} />
+        </div></>
     )
 }
 

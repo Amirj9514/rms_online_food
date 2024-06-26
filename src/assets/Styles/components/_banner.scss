@@ -9,3 +9,13 @@
     }
   }
 }
+
+.bannerHeight {
+  height: 350px;
+}
+
+@media screen and (max-width: 768px) {
+  .bannerHeight {
+    height: 250px !important;
+  }
+}
