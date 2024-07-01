@@ -1,35 +1,35 @@
 import { useEffect } from "react";
 import Header from "./header/header";
-import { useSharedService } from "../shared/services/shared.service";
+import { ApiService } from "../shared/services/sharedService";
+import { useDispatch, } from 'react-redux';
+import { AppDispatch } from '../Store/store';
+import {  insertData } from '../Store/Slices/sharedDataSlice';
 
 
 
 const Layout = () => {
-  const { sendGetRequest, state, insertData } = useSharedService()
+
+  const dispatch = useDispatch<AppDispatch>();  
 
   useEffect(() => {
+    const apiService = new ApiService();
     const getResturantDetail = async () => {
       try {
-        const responce = await sendGetRequest(`GetRestaurantBranchesNameAndId/${process.env.REACT_APP_RESTAURANT_ID}`)
+        const responce = await apiService.sendGetRequest(`GetRestaurantBranchesNameAndId/${process.env.REACT_APP_RESTAURANT_ID}`)
         if (responce.Success) {
-          insertData({ key: 'resturantDetail', val: responce.Data })
+          dispatch(insertData({ key: 'resturantDetail', val: responce.Data }));
         } else {
-
         }
-
       } catch (error) {
-
       }
-
     }
 
     getResturantDetail()
-  }, [])
+  })
 
   return (
     <>
       <div className=''>
-
         <Header />
       </div>
     </>

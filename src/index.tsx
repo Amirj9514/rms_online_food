@@ -5,18 +5,20 @@ import App from './App';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { PrimeReactProvider } from 'primereact/api';
-import { SharedProvider } from './shared/services/shared.service';
+import { Provider } from 'react-redux';
+import store from './Store/store';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <SharedProvider>
+    <Provider store={store}>
       <PrimeReactProvider>
         <App />
       </PrimeReactProvider>
-    </SharedProvider>
+    </Provider>
 
 
   </React.StrictMode>

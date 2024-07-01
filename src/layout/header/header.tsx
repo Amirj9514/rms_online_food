@@ -5,32 +5,55 @@ import logo from "../../assets/Images/logo.png";
 import { useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
-import { useSharedService } from "../../shared/services/shared.service";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../Store/store";
+import { insertData } from "../../Store/Slices/sharedDataSlice";
+import { ApiService } from "../../shared/services/sharedService";
+import { RestaurantBranch } from "../../shared/interfaces/Branch.inteface";
+
 const Header = () => {
-    const [visible, setVisible] = useState(false);
-    const { state, getData } = useSharedService()
-    const [selectedCity, setSelectedCity] = useState(null);
-
-    const cities = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
-    ];
-
+    const sharedData = useSelector((state: RootState) => state.sharedData);
+    const [visible, setVisible] = useState<boolean>(true);
+    const [selectedBranch, setSelectedBranch] = useState<RestaurantBranch | null>(null);
+    const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
-        // const localStorageData = getData();
-        // if (localStorageData) {
-        //     console.log(localStorageData);
-            
-        //     // setSelectedCity(localStorageData.selectedCity);
-        // }
-    });
+        if (sharedData && sharedData.selectedBranch) {
+            setSelectedBranch(sharedData.selectedBranch);
+        }
+    }, [sharedData]);
 
+    const getResturantDetail = (): any[] => {
+        if (sharedData && sharedData.resturantDetail && sharedData.resturantDetail.length > 0) {
+            return sharedData.resturantDetail;
+        }
+        return [];
+    };
+
+
+
+    const handelSelectedBranch = (data: any): void => {
+        setSelectedBranch(data);
+        dispatch(insertData({ key: 'selectedBranch', val: data }));
+    }
+
+    const getBranchDetail = async () => {
+        const apiService = new ApiService();
+
+        try {
+            const responce = await apiService.sendPostRequest(`WebAppMainData?branch_id=${selectedBranch?.id}&app_id=1`, null)
+            if (responce.Success) {
+            }else{
+
+            }
+        } catch (error) {
+
+        }
+
+    }
     return (
         <>
             <nav className="topNavbar">
+
                 <div className="flex justify-content-between align-items-center py-2 mx-4">
                     <div className="flex align-items-center gap-3">
                         <div className="logo">
@@ -96,24 +119,18 @@ const Header = () => {
                                 </div>
                             </div>
                         </div>
-
-
                         <div className="flex flex-column align-item-center justify-center-center text-center">
                             <div className="text-lg font-semibold mb-2">
                                 Please Select Branch
                             </div>
-
                             <div className="text-left">
-                                <Dropdown value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name"
-                                    placeholder="Select a City" className="w-full" />
-
+                                <Dropdown value={selectedBranch} onChange={(e) => handelSelectedBranch(e.value)} options={getResturantDetail()} optionLabel="name"
+                                    placeholder="Select a Branch" className="w-full" />
                             </div>
                         </div>
-
-
                         <div>
                             <div>
-                                <Button label="Let's Go get some Food" className="w-full" />
+                                <Button label="Let's Go get some Food" onClick={() => { getBranchDetail() }} className="w-full" />
                             </div>
                         </div>
                     </div>
