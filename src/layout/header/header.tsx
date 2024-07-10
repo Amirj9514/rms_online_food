@@ -9,17 +9,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../Store/store";
 import { insertData } from "../../Store/Slices/sharedDataSlice";
 import { ApiService } from "../../shared/services/sharedService";
-import { RestaurantBranch } from "../../shared/interfaces/Branch.inteface";
+import { BranchDetail, RestaurantBranch } from "../../shared/interfaces/Branch.inteface";
 
 const Header = () => {
     const sharedData = useSelector((state: RootState) => state.sharedData);
-    const [visible, setVisible] = useState<boolean>(true);
+    const [visible, setVisible] = useState<boolean>(false);
     const [selectedBranch, setSelectedBranch] = useState<RestaurantBranch | null>(null);
+    const [activeBranch, setActiveBranch] = useState<BranchDetail | null>(null)
     const dispatch = useDispatch<AppDispatch>();
+
     useEffect(() => {
         if (sharedData && sharedData.selectedBranch) {
             setSelectedBranch(sharedData.selectedBranch);
         }
+
+        if (sharedData && sharedData.selectedBranchDetail) {
+            setActiveBranch(sharedData.selectedBranchDetail);
+        } else {
+            setVisible(prevVisible => {
+                if (!prevVisible) {
+                    return true;
+                }
+                return prevVisible;
+            });
+        }
+
     }, [sharedData]);
 
     const getResturantDetail = (): any[] => {
@@ -29,11 +43,8 @@ const Header = () => {
         return [];
     };
 
-
-
     const handelSelectedBranch = (data: any): void => {
         setSelectedBranch(data);
-        dispatch(insertData({ key: 'selectedBranch', val: data }));
     }
 
     const getBranchDetail = async () => {
@@ -42,7 +53,12 @@ const Header = () => {
         try {
             const responce = await apiService.sendPostRequest(`WebAppMainData?branch_id=${selectedBranch?.id}&app_id=1`, null)
             if (responce.Success) {
-            }else{
+                setActiveBranch(responce.Data)
+                dispatch(insertData({ key: 'selectedBranchDetail', val: responce.Data }));
+                dispatch(insertData({ key: 'selectedBranch', val: selectedBranch }));
+
+                setVisible(false)
+            } else {
 
             }
         } catch (error) {
@@ -59,14 +75,14 @@ const Header = () => {
                         <div className="logo">
                             <img src={logo} alt="logo" width={100} />
                         </div>
-                        <div className="flex gap-1 align-items-center cursor-pointer ml-3">
+                        <div className="flex gap-1 align-items-center cursor-pointer ml-3" onClick={() => { setVisible(true) }}>
                             <div className="flex justify-content-center align-items-center">
                                 <CiLocationOn size={25} />
                             </div>
                             <div>
                                 <div>Select Branch</div>
                                 <div className="text-lg font-semibold">
-                                    Falafel Mustafa Town
+                                    {activeBranch ? activeBranch?.name : 'Click To Select'}
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,3 @@
-import React from 'react';
 import './home.scss';
 import Banner from '../../components/home/banner/banner';
 import ResturantDetail from '../../components/home/ResturantDetail/resturantDetail';
