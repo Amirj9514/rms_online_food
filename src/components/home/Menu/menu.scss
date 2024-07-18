@@ -1,0 +1,68 @@
+.tabs {
+  background-color: #ffffff;
+  border-radius: 6px;
+  .arrows {
+    height: 100%;
+    background-color: #f3f3f3;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  ul {
+    margin: 5px;
+    background-color: #ffffff;
+    padding: 0px 0px 2px 0px;
+    display: flex;
+    overflow: auto;
+    border-radius: 6px;
+    text-wrap: nowrap;
+
+    li {
+      cursor: pointer;
+      padding: 13px 15px;
+      list-style: none;
+      border-bottom: 5px solid #e5e7eb;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .active {
+      border-color: #0891b2;
+    }
+  }
+}
+
+.menuCard {
+  background-color: #fafafa;
+  border-radius: 6px;
+  position: relative;
+  min-height: 100px;
+  overflow: hidden;
+ box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  .menuDetail {
+    width: calc(100% - 110px);
+  }
+
+  .menuImg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    height: 100px;
+    img {
+      object-fit: cover;
+    }
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

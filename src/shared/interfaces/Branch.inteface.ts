@@ -63,7 +63,7 @@ export interface BranchMenu {
   take_away_price: string;
   delivery_price: string;
   image: string;
-  imageUrl: string;
+  image_url: string;
   ingredient: string | null;
   description: string;
   isFav: boolean;

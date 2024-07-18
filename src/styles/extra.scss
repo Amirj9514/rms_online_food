@@ -1,0 +1,28 @@
+.p-tabview {
+  .p-tabview-nav-container {
+    .p-tabview-nav {
+      background: #ffffff;
+      border: 5px solid #e5e7eb;
+      border-width: 0 0 5px 0;
+      li {
+        margin-bottom: -4px;
+
+        &:hover {
+          border-color: #9ca3af;
+          border-width: 0 0 4px 0;
+          border-style: solid;
+        }
+      }
+      li.p-highlight {
+        pointer-events: none;
+        .p-tabview-nav-link {
+          border-width: 6px;
+          color: #06b6d4;
+          border: none;
+          border-bottom: 6px solid;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+}

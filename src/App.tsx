@@ -7,7 +7,9 @@ function App() {
   return (
     <div className="App">
       <Layout></Layout>
-      <Home />
+      <div style={{ marginTop: '100px' }}>
+        <Home />
+      </div>
     </div>
 
 

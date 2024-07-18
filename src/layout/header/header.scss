@@ -1,6 +1,11 @@
 .topNavbar {
-  background-color:#ffffff;
-  .logo{
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  top: 0;
+  .logo {
     width: 100px;
   }
 
